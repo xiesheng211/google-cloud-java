@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ public final class InstanceGroupManagerActionsSummary implements ApiMessage {
   private final Integer recreating;
   private final Integer refreshing;
   private final Integer restarting;
+  private final Integer verifying;
 
   private InstanceGroupManagerActionsSummary() {
     this.abandoning = null;
@@ -43,6 +44,7 @@ public final class InstanceGroupManagerActionsSummary implements ApiMessage {
     this.recreating = null;
     this.refreshing = null;
     this.restarting = null;
+    this.verifying = null;
   }
 
   private InstanceGroupManagerActionsSummary(
@@ -53,7 +55,8 @@ public final class InstanceGroupManagerActionsSummary implements ApiMessage {
       Integer none,
       Integer recreating,
       Integer refreshing,
-      Integer restarting) {
+      Integer restarting,
+      Integer verifying) {
     this.abandoning = abandoning;
     this.creating = creating;
     this.creatingWithoutRetries = creatingWithoutRetries;
@@ -62,33 +65,37 @@ public final class InstanceGroupManagerActionsSummary implements ApiMessage {
     this.recreating = recreating;
     this.refreshing = refreshing;
     this.restarting = restarting;
+    this.verifying = verifying;
   }
 
   @Override
   public Object getFieldValue(String fieldName) {
-    if (fieldName.equals("abandoning")) {
+    if ("abandoning".equals(fieldName)) {
       return abandoning;
     }
-    if (fieldName.equals("creating")) {
+    if ("creating".equals(fieldName)) {
       return creating;
     }
-    if (fieldName.equals("creatingWithoutRetries")) {
+    if ("creatingWithoutRetries".equals(fieldName)) {
       return creatingWithoutRetries;
     }
-    if (fieldName.equals("deleting")) {
+    if ("deleting".equals(fieldName)) {
       return deleting;
     }
-    if (fieldName.equals("none")) {
+    if ("none".equals(fieldName)) {
       return none;
     }
-    if (fieldName.equals("recreating")) {
+    if ("recreating".equals(fieldName)) {
       return recreating;
     }
-    if (fieldName.equals("refreshing")) {
+    if ("refreshing".equals(fieldName)) {
       return refreshing;
     }
-    if (fieldName.equals("restarting")) {
+    if ("restarting".equals(fieldName)) {
       return restarting;
+    }
+    if ("verifying".equals(fieldName)) {
+      return verifying;
     }
     return null;
   }
@@ -137,6 +144,10 @@ public final class InstanceGroupManagerActionsSummary implements ApiMessage {
     return restarting;
   }
 
+  public Integer getVerifying() {
+    return verifying;
+  }
+
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
@@ -168,6 +179,7 @@ public final class InstanceGroupManagerActionsSummary implements ApiMessage {
     private Integer recreating;
     private Integer refreshing;
     private Integer restarting;
+    private Integer verifying;
 
     Builder() {}
 
@@ -197,6 +209,9 @@ public final class InstanceGroupManagerActionsSummary implements ApiMessage {
       if (other.getRestarting() != null) {
         this.restarting = other.restarting;
       }
+      if (other.getVerifying() != null) {
+        this.verifying = other.verifying;
+      }
       return this;
     }
 
@@ -209,6 +224,7 @@ public final class InstanceGroupManagerActionsSummary implements ApiMessage {
       this.recreating = source.recreating;
       this.refreshing = source.refreshing;
       this.restarting = source.restarting;
+      this.verifying = source.verifying;
     }
 
     public Integer getAbandoning() {
@@ -283,6 +299,15 @@ public final class InstanceGroupManagerActionsSummary implements ApiMessage {
       return this;
     }
 
+    public Integer getVerifying() {
+      return verifying;
+    }
+
+    public Builder setVerifying(Integer verifying) {
+      this.verifying = verifying;
+      return this;
+    }
+
     public InstanceGroupManagerActionsSummary build() {
 
       return new InstanceGroupManagerActionsSummary(
@@ -293,7 +318,8 @@ public final class InstanceGroupManagerActionsSummary implements ApiMessage {
           none,
           recreating,
           refreshing,
-          restarting);
+          restarting,
+          verifying);
     }
 
     public Builder clone() {
@@ -306,6 +332,7 @@ public final class InstanceGroupManagerActionsSummary implements ApiMessage {
       newBuilder.setRecreating(this.recreating);
       newBuilder.setRefreshing(this.refreshing);
       newBuilder.setRestarting(this.restarting);
+      newBuilder.setVerifying(this.verifying);
       return newBuilder;
     }
   }
@@ -336,6 +363,9 @@ public final class InstanceGroupManagerActionsSummary implements ApiMessage {
         + ", "
         + "restarting="
         + restarting
+        + ", "
+        + "verifying="
+        + verifying
         + "}";
   }
 
@@ -353,7 +383,8 @@ public final class InstanceGroupManagerActionsSummary implements ApiMessage {
           && Objects.equals(this.none, that.getNone())
           && Objects.equals(this.recreating, that.getRecreating())
           && Objects.equals(this.refreshing, that.getRefreshing())
-          && Objects.equals(this.restarting, that.getRestarting());
+          && Objects.equals(this.restarting, that.getRestarting())
+          && Objects.equals(this.verifying, that.getVerifying());
     }
     return false;
   }
@@ -368,6 +399,7 @@ public final class InstanceGroupManagerActionsSummary implements ApiMessage {
         none,
         recreating,
         refreshing,
-        restarting);
+        restarting,
+        verifying);
   }
 }

@@ -94,10 +94,7 @@ public class DocumentReferenceTest {
   @Spy
   private FirestoreImpl firestoreMock =
       new FirestoreImpl(
-          FirestoreOptions.newBuilder()
-              .setProjectId("test-project")
-              .setTimestampsInSnapshotsEnabled(true)
-              .build(),
+          FirestoreOptions.newBuilder().setProjectId("test-project").build(),
           Mockito.mock(FirestoreRpc.class));
 
   @Captor private ArgumentCaptor<CommitRequest> commitCapture;
@@ -418,9 +415,7 @@ public class DocumentReferenceTest {
         .sendRequest(
             commitCapture.capture(), Matchers.<UnaryCallable<CommitRequest, CommitResponse>>any());
 
-    documentReference
-        .set(map("foo", FieldValue.arrayUnion("bar", map("foo", "baz"))))
-        .get();
+    documentReference.set(map("foo", FieldValue.arrayUnion("bar", map("foo", "baz")))).get();
 
     CommitRequest set =
         commit(
@@ -438,9 +433,7 @@ public class DocumentReferenceTest {
         .sendRequest(
             commitCapture.capture(), Matchers.<UnaryCallable<CommitRequest, CommitResponse>>any());
 
-    documentReference
-        .set(map("foo", FieldValue.arrayRemove("bar", map("foo", "baz"))))
-        .get();
+    documentReference.set(map("foo", FieldValue.arrayRemove("bar", map("foo", "baz")))).get();
 
     CommitRequest set =
         commit(
