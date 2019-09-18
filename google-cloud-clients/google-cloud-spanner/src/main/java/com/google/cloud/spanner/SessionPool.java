@@ -1041,7 +1041,7 @@ final class SessionPool {
   private int pendingClosure;
 
   @GuardedBy("lock")
-  private SettableFuture<Void> closureFuture;
+  private ListenableFuture<Void> closureFuture;
 
   @GuardedBy("lock")
   private final LinkedList<PooledSession> readSessions = new LinkedList<>();
@@ -1415,7 +1415,7 @@ final class SessionPool {
   private void decrementPendingClosures() {
     pendingClosure--;
     if (pendingClosure == 0) {
-      closureFuture.set(null);
+      closureFuture.run();
     }
   }
 
@@ -1441,7 +1441,11 @@ final class SessionPool {
         waiter.put(newSpannerException(ErrorCode.INTERNAL, "Client has been closed"));
         waiter = readWriteWaiters.poll();
       }
-      closureFuture = SettableFuture.create();
+      closureFuture = ListenableFutureTask.create(
+          new Runnable() {
+            @Override
+            public void run() {}
+            }, null);
       retFuture = closureFuture;
       pendingClosure =
           totalSessions() + numSessionsBeingCreated + 1 /* For pool maintenance thread */;
